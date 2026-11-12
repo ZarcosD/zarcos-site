@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zarcos — Capital &amp; Advisory</title>
+  <meta name="description" content="Zarcos is a research-driven investing and advisory practice focused on reshoring, critical supply chains, and industrial capacity.">
+  <link rel="canonical" href="https://zarcos.digital/">
+  <meta name="author" content="Zarcos">
+  <meta name="theme-color" content="#3C2A12">
+  <meta property="og:title" content="Zarcos — Capital &amp; Advisory">
+  <meta property="og:description" content="Research-driven investing and advisory for U.S. reindustrialization.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zarcos.digital/">
+  <meta property="og:site_name" content="Zarcos">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://zarcos.digital/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Zarcos — Capital &amp; Advisory, set over a map of Texas and the Gulf Coast">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zarcos — Capital &amp; Advisory">
+  <meta name="twitter:description" content="Research-driven investing and advisory for U.S. reindustrialization.">
+  <meta name="twitter:image" content="https://zarcos.digital/og.jpg">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="assets/jost-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/jost-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    /* Jost and Libre Baskerville, SIL Open Font License; self-hosted Latin subsets. */
+    @font-face { font-family: Jost; font-style: normal; font-weight: 400; font-display: swap; src: url(assets/jost-latin-400-normal.woff2) format("woff2"); }
+    @font-face { font-family: Jost; font-style: normal; font-weight: 500; font-display: swap; src: url(assets/jost-latin-500-normal.woff2) format("woff2"); }
+    @font-face { font-family: "Libre Baskerville"; font-style: normal; font-weight: 400; font-display: swap; src: url(assets/libre-baskerville-latin-400-normal.woff2) format("woff2"); }
+    @font-face { font-family: "Libre Baskerville"; font-style: italic; font-weight: 400; font-display: swap; src: url(assets/libre-baskerville-latin-400-italic.woff2) format("woff2"); }
+
+    :root {
+      --olive: #3C2A12;
+      --olive-deep: #2A1C0A;
+      --ink: #1A140E;
+      --paper: #F1E6D2;
+      --cream: #F3E6D0;
+      --rust: #6E3320;
+      --rust-ink: #F3E6D0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    body {
+      position: relative;
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Jost, "Futura", "Century Gothic", "Avenir Next", sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
+    a:hover { opacity: 0.75; }
+    a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+    .skip {
+      position: absolute;
+      left: 16px;
+      top: -64px;
+      z-index: 80;
+      background: var(--ink);
+      color: var(--cream);
+      padding: 8px 14px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .skip:focus { top: 12px; }
+
+    /* Print grain: a small pre-rendered tile, so nothing is computed while scrolling. */
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      background: url(assets/grain.png) 0 0 / 160px 160px;
+      opacity: 0.16;
+    }
+
+    /* Aged ink: a soft pre-rendered blotch tile laid over the whole page, so the
+       flat colour fields fade unevenly like the cover map. Scrolls with the page. */
+    .age {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 59;
+      background: url(assets/age.webp) 0 0 / 900px 900px;
+    }
+
+    /* ---------- Cover ---------- */
+    .cover {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      background: var(--olive);
+      color: var(--cream);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .cover-map {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .cover-map img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 66% 100%;
+    }
+
+    .cover-top, .cover-main { position: relative; z-index: 2; }
+    .cover-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 12px 48px;
+      background: var(--olive);
+    }
+    .brand {
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 12px 0;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    nav a {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 0 14px 18px;
+    }
+
+    /* Wide screens: the lockup sits bottom-right, over the Gulf. */
+    .cover-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      text-align: right;
+      padding: 48px 48px 52px;
+    }
+    .wordmark {
+      margin: 0;
+      font-weight: 500;
+      font-size: clamp(4.2rem, 9.5vw, 8.5rem);
+      line-height: 0.86;
+      letter-spacing: -0.035em;
+      margin-right: -0.035em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+    .cover-meta { margin-top: 30px; }
+    .cover-line {
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.45;
+      margin: 0 0 14px;
+    }
+    .cover-line em { font-style: italic; }
+    .cover-rule {
+      width: 11rem;
+      height: 1px;
+      background: currentColor;
+      margin: 0 0 14px auto;
+    }
+    .cover-kicker {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.45;
+    }
+
+    /* Phones and portrait screens: map above, lockup on a solid olive block. */
+    @media (max-width: 799px), (orientation: portrait) {
+      .cover-top { flex-direction: column; align-items: flex-start; gap: 0; padding: 10px 32px 8px; order: 1; }
+      nav { justify-content: flex-start; }
+      nav a { padding: 14px 16px 14px 0; }
+      nav a:last-child { padding-right: 0; }
+      .cover-map { position: relative; inset: auto; order: 2; flex: 1 1 auto; min-height: min(88vw, 60vh); }
+      .cover-map img { position: absolute; inset: 0; object-position: 40% 100%; }
+      .cover-main {
+        order: 3;
+        flex: none;
+        align-items: flex-start;
+        text-align: left;
+        background: var(--olive);
+        padding: 36px 32px 40px;
+      }
+      .wordmark { margin-right: 0; margin-left: -0.04em; font-size: clamp(4.2rem, 13vw, 8.5rem); }
+      .cover-meta { margin-top: 26px; }
+      .cover-rule { margin-left: 0; }
+      .cover-kicker { max-width: 16rem; }
+    }
+    @media (max-width: 359px) {
+      .cover-top, .cover-main { padding-left: 24px; padding-right: 24px; }
+      nav a { padding-right: 12px; letter-spacing: 0.14em; }
+    }
+
+    /* ---------- Shared section chrome ---------- */
+    .runhead {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding-bottom: 14px;
+      border-bottom: 1px solid currentColor;
+    }
+    .runhead span { opacity: 0.8; }
+    .section {
+      position: relative;
+      padding: 36px 32px 72px;
+    }
+    @media (min-width: 800px) {
+      .section { padding: 44px 48px 88px; }
+    }
+    @media (max-width: 359px) {
+      .section { padding-left: 24px; padding-right: 24px; }
+    }
+    .section-inner { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; }
+    .section h2 {
+      margin: 48px 0 28px;
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    @media (min-width: 800px) {
+      .section h2 { margin-top: 64px; }
+    }
+
+    /* Thesis — paper, typographic */
+    .thesis {
+      background: var(--paper);
+      color: var(--ink);
+    }
+    .thesis .lede {
+      margin: 0;
+      font-weight: 400;
+      font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      max-width: 28em;
+    }
+
+    /* Practice — one strong, quieter field */
+    .practice {
+      background: var(--rust);
+      color: var(--rust-ink);
+    }
+    .practice-grid {
+      display: grid;
+      gap: 36px 56px;
+      align-items: start;
+    }
+    @media (min-width: 860px) {
+      .practice-grid {
+        grid-template-columns: auto 1fr;
+        gap: 64px 72px;
+        align-items: center;
+      }
+    }
+    .emblem {
+      width: 132px;
+      margin: 0;
+      opacity: 0.92;
+    }
+    @media (min-width: 860px) {
+      .emblem { width: 156px; }
+    }
+    .emblem svg { width: 100%; height: auto; display: block; }
+    .practice-list { list-style: none; margin: 0; padding: 0; }
+    .practice-list li {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4px 32px;
+      padding: 18px 0;
+      border-top: 1px solid currentColor;
+    }
+    @media (min-width: 600px) {
+      .practice-list li {
+        grid-template-columns: 10.5rem 1fr;
+        align-items: baseline;
+        padding: 20px 0;
+      }
+    }
+    .practice-list li:last-child { border-bottom: 1px solid currentColor; }
+    .practice-list h3 {
+      margin: 0;
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .practice-list p {
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+
+    /* Focus — paper, labels only */
+    .focus {
+      background: var(--paper);
+      color: var(--ink);
+    }
+    .focus-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0;
+      border-bottom: 1px solid var(--ink);
+    }
+    @media (min-width: 720px) {
+      .focus-list { grid-template-columns: 1fr 1fr; }
+    }
+    .focus-list li {
+      padding: 28px 0 30px;
+      border-top: 1px solid var(--ink);
+    }
+    @media (min-width: 720px) {
+      .focus-list li:nth-child(odd) { padding-right: 32px; }
+      .focus-list li:nth-child(even) { padding-left: 32px; border-left: 1px solid var(--ink); }
+    }
+    .focus-list h3 {
+      margin: 0;
+      font-weight: 500;
+      font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      text-transform: none;
+    }
+
+    /* Contact — olive bookend */
+    .contact {
+      background: var(--olive);
+      color: var(--cream);
+    }
+    .contact .lede {
+      margin: 0 0 28px;
+      font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+      line-height: 1.3;
+    }
+    .email {
+      display: inline-block;
+      font-size: clamp(1.25rem, 3vw, 1.85rem);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      padding: 6px 0 4px;
+      word-break: break-word;
+    }
+    .email:hover { opacity: 1; border-bottom-color: transparent; }
+
+    footer.colophon {
+      background: var(--olive);
+      color: var(--cream);
+      padding: 0 32px 48px;
+    }
+    @media (min-width: 800px) {
+      footer.colophon { padding: 0 48px 56px; }
+    }
+    @media (max-width: 359px) {
+      footer.colophon { padding-left: 24px; padding-right: 24px; }
+    }
+    .colophon p {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding-top: 18px;
+      border-top: 1px solid currentColor;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#thesis">Skip to content</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="age" aria-hidden="true"></div>
+
+  <header class="cover" id="top">
+    <!--
+      Cover map, pre-rendered. Sources (public domain): US state boundaries from
+      us-atlas@3 (U.S. Census cartographic boundaries); Mexico from world-atlas@2
+      (Natural Earth); shaded relief and rivers from Natural Earth 1:10m.
+      Albers equal-area conic, parallels 29.5°/37.5°, central meridian 96°W,
+      framed on Texas and the Gulf Coast.
+    -->
+    <div class="cover-map" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 799px), (orientation: portrait)" type="image/avif" srcset="assets/map-tall-860.avif 860w, assets/map-tall-1290.avif 1290w" sizes="100vw">
+        <source media="(max-width: 799px), (orientation: portrait)" type="image/webp" srcset="assets/map-tall-860.webp 860w, assets/map-tall-1290.webp 1290w" sizes="100vw">
+        <source type="image/avif" srcset="assets/map-wide-1440.avif 1440w, assets/map-wide-2880.avif 2880w" sizes="100vw">
+        <source type="image/webp" srcset="assets/map-wide-1440.webp 1440w, assets/map-wide-2880.webp 2880w" sizes="100vw">
+        <img src="assets/map-wide-1440.webp" alt="" width="1440" height="900" fetchpriority="high" decoding="async">
+      </picture>
+    </div>
+
+    <div class="cover-top">
+      <a class="brand" href="#top">Zarcos</a>
+      <nav aria-label="Sections">
+        <a href="#thesis">Thesis</a>
+        <a href="#practice">Practice</a>
+        <a href="#focus">Focus</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+
+    <div class="cover-main">
+      <h1 class="wordmark">Zarcos</h1>
+      <div class="cover-meta">
+        <p class="cover-line">Capital &amp; Advisory<br><em>Est. MMXXV</em></p>
+        <div class="cover-rule"></div>
+        <p class="cover-kicker">Research-driven investing for U.S. reindustrialization</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section thesis" id="thesis">
+      <div class="section-inner">
+        <div class="runhead"><span>Zarcos</span></div>
+        <h2>Thesis</h2>
+        <p class="lede">Zarcos is a research-driven investing and advisory practice concerned with real industrial and supply-chain capacity. The work is U.S. reindustrialization: reshoring, critical supply chains, and the plants and systems held close to home — in the United States and among allied countries.</p>
+      </div>
+    </section>
+
+    <section class="section practice" id="practice">
+      <div class="section-inner">
+        <div class="runhead"><span>Zarcos — Capital &amp; Advisory</span></div>
+        <h2>Practice</h2>
+        <div class="practice-grid">
+          <!-- Emblem slot: Roman capital Z in a thin double ring. Replace the path with Micah's own mark when ready. -->
+          <div class="emblem" aria-hidden="true">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="93" fill="none" stroke="currentColor" stroke-width="0.9"/>
+              <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="0.9"/>
+              <path fill="currentColor" d="M66 58H136V62.5L82 137.5H127.5L134 116H136V142H64V137.5L118 62.5H74.5L68 82H66Z"/>
+            </svg>
+          </div>
+          <ul class="practice-list">
+            <li>
+              <h3>Investment</h3>
+              <p>Industrial capital</p>
+            </li>
+            <li>
+              <h3>Advisory</h3>
+              <p>Markets and sourcing</p>
+            </li>
+            <li>
+              <h3>Research</h3>
+              <p>Macro and industrial reports</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section focus" id="focus">
+      <div class="section-inner">
+        <div class="runhead"><span>Zarcos</span></div>
+        <h2>Focus</h2>
+        <ul class="focus-list">
+          <li><h3>Critical inputs</h3></li>
+          <li><h3>Energy &amp; electrical infrastructure</h3></li>
+          <li><h3>Defense-adjacent hardware</h3></li>
+          <li><h3>Industrial &amp; robotics components</h3></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="section-inner">
+        <div class="runhead"><span>Zarcos — Capital &amp; Advisory</span></div>
+        <h2>Contact</h2>
+        <p class="lede">Correspondence is welcome.</p>
+        <a class="email" href="mailto:info@zarcos.digital">info@zarcos.digital</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon">
+    <p>© 2026 Zarcos · Capital &amp; Advisory</p>
+  </footer>
+</body>
+</html>
